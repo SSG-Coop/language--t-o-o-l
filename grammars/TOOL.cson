@@ -1,0 +1,99 @@
+# TextMate tutorial: http://manual.macromates.com/en/language_grammars
+# https://flight-manual.atom.io/hacking-atom/sections/creating-a-legacy-textmate-grammar/
+# View > Developer > Reload Window : to reload grammar stk
+
+# Regex to convert keys to unquoted: '(include|match|captures|begin|end|beginCaptures|endCaptures|name|patterns|0|1|2|3|4|5|6|7|8|9|comment|fileTypes|scopeName|repository|contentName|firstLineMatch|foldingStartMarker|foldingStopMarker)':
+
+scopeName: 'source.tool' # <scope> should be a short, unique indicator for the language ("js", "php", "c", etc.)
+name: 'TOOL' # The title that will show up in grammar selection and on your status bar.
+fileTypes: [ # An array of file extensions.
+  't'
+  'v'
+  'samm'
+]
+firstLineMatch: '' # A regular expression that is matched against the first line of the document when Atom is trying to decide if the grammar is appropriate. Useful for shell scripts, mostly.
+foldingStartMarker: '' # A regular expression that checks for the start of a foldable area (such as `{`).
+foldingStopMarker: '' # A regular expression that checks for the end of a foldable area (such as `}`). If both folding markers are matched in the same line, there will be no foldable area.
+patterns: [ # An array of individual pattern declarations.
+#  {
+#    match: '' # A regular expression that matches some content. Optional.
+#    begin: '' # A regular expression that precedes the content. Optional.
+#    end: '' # A regular expression that follows the content. Optional.
+#    name: '' # A period-delimited list of classes that will be applied to the content identified by `match`. Optional.
+#    contentName: '' # A period-delimited list of classes that will be applied to the content within `begin` and `end`. Optional.
+#    captures: # An array of `name` designations for `match` expressions that capture multiple bits. Optional.
+#      0: # Arrays start at zero. This one will catch the whole regex. 1+ will catch the capture groups.
+#        name: '' # This should be self-explanatory by now.
+#    beginCaptures: # An array of `name` designations for `begin` expressions that capture multiple bits. Optional.
+#      0:
+#        name: ''
+#    endCaptures: # An array of `name` designations for `end` expressions that capture multiple bits. Optional.
+#      0:
+#        name: ''
+#    include: '' # This can be a reference to another grammar (by scope name), the current grammar (with `$self`), or a rule from the grammar's repository (with `#<rule>`). Optional.
+#    patterns: [] # This is where you can get tricky. When you have matched content, Atom will search within it for anything in the child array. You can have `patterns[]` within `patterns[]`, then throw an `include` in to jump to some other rule or refer back to the root of the grammar. If you are making a rule that captures a block that might contain other tags, you should refer back to the root. Optional, naturally.
+#  }
+  {
+    match: '!.*$'
+    # alternative match: '((!).*$\n?)'
+    name: 'meta.comment.tool'
+  }
+  {
+    match: '".*?"'
+    name: 'string.tool'
+  }
+  {
+    match: '\\$[a-z,A-Z,0-9]+'
+    name: 'variable.language.tool'
+  }
+  {
+    match: '\\b(if|else|endif|while|endwhile|for|endfor|break|from|upto|downto|
+            by|keep|buildstring)\\b'
+    name: 'keyword.control.tool'
+  }
+  {
+    match: '\\b(listen|say|menu|mumble)\\b'
+    name: 'keyword.screen_io.tool'
+  }
+  {
+    match: '\\b(abs|add|agetime|allocvin|animalstk|arcinfo|assign|avg|
+            binary|biogrow|biostk|biportion|blowup|booleq|boolge|boolgt|boolle|
+            boollt|boolne|canplan1900|changeseq|changeshape|character|classify|
+            cmp|convolution|coordmax|coordmin|copyshape|cplan1900|create|
+            crosstab|cumprod|cumsum|delete|delta|depreciate|diag|dimtran|
+            display|divide|dumpobj|empty|evolvethings|excel|exp|expand|export|
+            extend|extents|extract|famform|fampop|fillbins|findreserve|finplan|
+            fishpop|fishstk|fixat|flip|graph|geomap|getobjinfo|glue|growlivestk|
+            growthrate|hrplan|hypertrig|import|inner|insert|intersect|
+            invtostk|launchwincmd|lifeexp|lifetable|lineardiff|linint|lintrend|
+            loadnetwork|log10|loge|monotonic|macroforest|map|mapcat|mapdims|max|
+            min|mortfromle|movethings|multiply|norm|outer|polynomial|popbirths|
+            populate|power|presentval|rake|random|real|reorder|scurve|seeshape|
+            selfstkflw|shrink|smooth|soiltranloc|solvelinear|sort|sqrt|stack|
+            statechange|subtract|sum|stkactflw|stkflwage|stkflwbirth|stkflwio|
+            stkflwstkshr|stkflwstky|stkflwstock|skipto|table|timeage|trig|union|
+            unwind|usenewstk|useoldstk|windup|satproj|fourier|splineint)\\b'
+    name: 'keyword.tools.tool'
+  }
+  # infix_notation not working
+  #{
+  #  match: '>|<|=|\||\*|\/|\+|-'
+  #  name: 'keyword.infix_notation.tool'
+  #}
+  {
+    match: '\\b(local|localview|informant|localinformant|boolean|integer|real|
+            string|input|output|creview|view|disview|fbview)\\b'
+    name: 'declarations.tool'
+  }
+]
+
+#repository: # An array of rules. If you're going to be referencing one bit of code over and over again, stick it here so that you can edit all in one place.
+#  ruleName: # Can be anything.
+#    {
+#      name: ''
+#      match: ''
+#      end: ''
+#      endCaptures:
+#        0:
+#          name: ''
+#    }
